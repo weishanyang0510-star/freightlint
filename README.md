@@ -10,6 +10,8 @@ This is an early-stage, independently developed open-source project. It does not
 
 ## Try it
 
+**[Open the browser checker](https://weishanyang0510-star.github.io/freightlint/)** or download it for offline use.
+
 Download this repository (Code → Download ZIP), unzip it, then double-click **index.html**. The checker works locally, including without an internet connection. No install, account, backend, API key, build step or running cost is required. Click **English** to switch language, then **Try a sample with issues**.
 
 For a local HTTP preview, from the repository folder run `python3 -m http.server 8765 --bind 127.0.0.1` and open `http://127.0.0.1:8765`.

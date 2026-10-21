@@ -1,7 +1,7 @@
 'use strict';
 (() => {
   const $ = id => document.getElementById(id);
-  let language = 'zh', report = null, revision = 0;
+  let language = 'zh', report = null, revision = 0, inputSource = 'local', inputName = '';
   const zh = {};
   document.querySelectorAll('[data-i18n]').forEach(el => { zh[el.dataset.i18n] = el.innerHTML; });
   const en = {
@@ -36,7 +36,8 @@
     if (!file) return;
     invalidate();
     const requestRevision = revision;
-    $('csv').value = ''; $('filename').textContent = file.name;
+    inputSource = 'file'; inputName = file.name;
+    $('csv').value = ''; $('filename').textContent = inputName;
     if (file.size > FreightLint.MAX_BYTES) { $('notice').textContent = t('文件超过 5 MiB，请拆分后再试。', 'File exceeds 5 MiB. Split it and try again.'); return; }
     try {
       const buffer = await file.arrayBuffer();
@@ -55,14 +56,15 @@
   $('language').addEventListener('click', () => {
     language = language === 'zh' ? 'en' : 'zh'; document.documentElement.lang = language === 'zh' ? 'zh-CN' : 'en';
     document.title = language === 'zh' ? 'FreightLint · 货运表格检查' : 'FreightLint · Freight CSV checker';
-    document.querySelectorAll('[data-i18n]').forEach(el => { if (el.id !== 'filename' || !$('file').files.length) el.innerHTML = (language === 'zh' ? zh : en)[el.dataset.i18n]; });
+    document.querySelectorAll('[data-i18n]').forEach(el => { if (el.id !== 'filename') el.innerHTML = (language === 'zh' ? zh : en)[el.dataset.i18n]; });
+    $('filename').textContent = inputSource === 'file' ? inputName : inputSource === 'sample' ? t('虚构问题示例', 'Synthetic sample') : t('仅在本机读取', 'Read on this device only');
     $('language').textContent = language === 'zh' ? 'English' : '中文'; render();
   });
   $('csv').addEventListener('input', invalidate);
   $('file').addEventListener('change', e => readFile(e.target.files[0]));
   $('check').addEventListener('click', check);
-  $('demo').addEventListener('click', () => { invalidate(); $('csv').value = demo; $('file').value = ''; $('filename').textContent = t('虚构问题示例', 'Synthetic sample'); check(); });
-  $('clear').addEventListener('click', () => { invalidate(); $('csv').value = ''; $('file').value = ''; $('filename').textContent = t('仅在本机读取','Read on this device only'); $('csv').focus(); });
+  $('demo').addEventListener('click', () => { invalidate(); inputSource = 'sample'; $('csv').value = demo; $('file').value = ''; $('filename').textContent = t('虚构问题示例', 'Synthetic sample'); check(); });
+  $('clear').addEventListener('click', () => { invalidate(); inputSource = 'local'; $('csv').value = ''; $('file').value = ''; $('filename').textContent = t('仅在本机读取','Read on this device only'); $('csv').focus(); });
   $('filter').addEventListener('change', render);
   $('export-csv').addEventListener('click', () => { if (report) download(FreightLint.reportCSV(report, language), 'freightlint-issues.csv', 'text/csv;charset=utf-8'); });
   $('export-json').addEventListener('click', () => { if (report) download(JSON.stringify(report, null, 2), 'freightlint-report.json', 'application/json'); });

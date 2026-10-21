@@ -6,6 +6,8 @@
 
 ## 直接使用
 
+[在线打开检查工具](https://weishanyang0510-star.github.io/freightlint/)，也可以下载后离线使用。
+
 1. 在 GitHub 点击 Code → Download ZIP，解压后双击 `index.html`。
 2. 点击「试试问题示例」查看结果，或选择自己的 UTF-8 CSV 文件。
 3. 按行号修改原文件，再检查一次。可以下载问题 CSV 或完整 JSON 报告。
