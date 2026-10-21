@@ -1,0 +1,4 @@
+order_id,split_id,origin,destination,pieces,weight_kg,volume_cbm,mode,etd,eta
+DEMO-001,,Shenzhen,Dar es Salaam,12,680,3.2,sea,2026-11-01,2026-11-25
+DEMO-002,A,Shanghai,Nairobi,4,90,0.8,air,2026-11-03,2026-11-05
+DEMO-002,B,Shanghai,Nairobi,6,120,1.1,air,2026-11-03,2026-11-05

@@ -1,0 +1,11 @@
+{
+  "name": "freightlint",
+  "version": "0.1.0",
+  "description": "Offline bilingual freight CSV validation for browsers and Node.js.",
+  "private": true,
+  "license": "MIT",
+  "main": "lib/freightlint.js",
+  "bin": { "freightlint": "bin/freightlint.cjs" },
+  "scripts": { "test": "node --test", "check": "node bin/freightlint.cjs examples/valid.csv" },
+  "engines": { "node": ">=20" }
+}
